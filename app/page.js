@@ -19,31 +19,46 @@ export default function Home() {
                 </thead>
                 <tbody className="w-full">
                     <tr>
-                        <td>John Doe</td>
+                        <td className="flex items-center justify-center">
+                            <Image className="rounded-xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
+                            <span className="ml-2">John Doe</span> 
+                        </td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
                     </tr>
                     <tr>
-                        <td>Jane Doe</td>
+                        <td className="flex items-center justify-center">
+                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
+                            <span className="ml-2">John Doe</span> 
+                        </td>
                         <td>jane.doe@example.com</td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
                     </tr>
                     <tr>
-                        <td>Jane Doe</td>
+                        <td className="flex items-center justify-center">
+                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
+                            <span className="ml-2">John Doe</span> 
+                        </td>
                         <td>jane.doe@example.com</td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
                     </tr>
                     <tr>
-                        <td>Jane Doe</td>
+                        <td className="flex items-center justify-center">
+                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
+                            <span className="ml-2">John Doe</span> 
+                        </td>
                         <td>jane.doe@example.com</td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
                     </tr>
                     <tr>
-                        <td>Jane Doe</td>
+                        <td className="flex items-center justify-center">
+                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
+                            <span className="ml-2">John Doe</span> 
+                        </td>
                         <td>jane.doe@example.com</td>
                         <td>john.doe@example.com</td>
                         <td>john.doe@example.com</td>
