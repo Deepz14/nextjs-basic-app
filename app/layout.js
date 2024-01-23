@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +13,29 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <nav className="border border-gray-300 w-full p-1">
+            <Link href={'/'}>
+              <Image className="cursor-pointer rounded-2xl ml-3" src="/user-thumbnail.png" alt="User Logo" width={34} height={100} />
+            </Link>
+        </nav>
+        <section className="main-container flex flex-wrap">
+          {/* <aside className="aside-section border border-t-0 border-gray-300 max-h-full">
+            <ul className="h-full w-full"> */}
+              {/* <li>
+                  <a className="flex flex-col flex-wrap items-center w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" focusable="false"><g>
+                      <path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></g></svg>
+                    <p className="text-sm">Home</p>  
+                  </a>
+              </li> */}
+            {/* </ul>
+          </aside> */}
+          <main className="main-section max-h-full">
+            {children}
+          </main>
+        </section>
+      </body>
     </html>
   );
 }
