@@ -1,76 +1,46 @@
 import Image from "next/image";
+import FetchData from "./helpers/fetchData";
+import { Suspense } from "react";
+import UserProfile from "./[name]/page";
+import UserList from "./components/UserList";
 
-export default function Home() {
-  return (
-    <section className="m-3">
-        <div className="header-section p-1">
-            <h3 className="font-bold">User List</h3>
-        </div>
+const fetchUsers = async() => {
+    const options = {
+        method: 'GET',
+        headers: { 'X-GitHub-Api-Version': '2022-11-28'}
+    }
+    const userURI = [];
+    const data = await FetchData('https://api.github.com/users', options);
 
-        <div className="table-section w-full mt-3">
-            <table className="w-full">
-                <thead className="p-5">
-                    <tr className="">
-                        <th>Username</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody className="w-full">
-                    <tr>
-                        <td className="flex items-center justify-center">
-                            <Image className="rounded-xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
-                            <span className="ml-2">John Doe</span> 
-                        </td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                    </tr>
-                    <tr>
-                        <td className="flex items-center justify-center">
-                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
-                            <span className="ml-2">John Doe</span> 
-                        </td>
-                        <td>jane.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                    </tr>
-                    <tr>
-                        <td className="flex items-center justify-center">
-                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
-                            <span className="ml-2">John Doe</span> 
-                        </td>
-                        <td>jane.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                    </tr>
-                    <tr>
-                        <td className="flex items-center justify-center">
-                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
-                            <span className="ml-2">John Doe</span> 
-                        </td>
-                        <td>jane.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                    </tr>
-                    <tr>
-                        <td className="flex items-center justify-center">
-                            <Image className="rounded-2xl" src="/user-thumbnail.png" width={30} height={30} alt="user-img" /> 
-                            <span className="ml-2">John Doe</span> 
-                        </td>
-                        <td>jane.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                        <td>john.doe@example.com</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="table-footer border border-gray-300 text-right text-sm">
-                <button className="text-blue-500 px-3 ">◀</button>
-                <button>1 - 16</button>
-                <button className="text-blue-500 px-3">▶</button>
+    // Pushing the user url into userURI
+    if(data?.length > 0) {
+        data.forEach((user) => userURI.push(user?.url))
+    }
+
+    // fetching each user information
+    const users = Promise.all(userURI.map(async(url) => {
+        const resp = await FetchData(url);
+        return resp;
+    }))
+    .then((data) => data)
+    .catch((err) =>console.log(err))
+    return users;   
+}
+
+
+export default async function Home() {
+
+   const Users = await fetchUsers();
+   const currentPage = 1;
+
+    return (
+        <section className="my-3 mx-8">
+            <div className="header-section p-1">
+                <h3 className="font-bold text-lg">User List</h3>
             </div>
-        </div>
-    </section>
+            <Suspense fallback={<div>loading......</div>}>
+                <UserList users={Users} />
+            </Suspense>
+        </section>
   );
 }
