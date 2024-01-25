@@ -18,7 +18,7 @@ const UserDetailsCard = ({userInfo}) => {
                         height={150}
                     />
                 </div>
-                <div className="pl-1">
+                <div className="pl-1 py-2">
                     <h2 className="font-bold text-lg">{name}</h2>
                     <p>{userInfo.bio}</p>
                     <div className="my-2">
