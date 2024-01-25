@@ -1,7 +1,5 @@
-import Image from "next/image";
 import FetchData from "./helpers/fetchData";
 import { Suspense } from "react";
-import UserProfile from "./[name]/page";
 import UserList from "./components/UserList";
 
 const fetchUsers = async() => {
@@ -31,10 +29,9 @@ const fetchUsers = async() => {
 export default async function Home() {
 
    const Users = await fetchUsers();
-   const currentPage = 1;
 
     return (
-        <section className="my-3 mx-8">
+        <section className="my-3 mx-8 pb-5">
             <div className="header-section p-1">
                 <h3 className="font-bold text-lg">User List</h3>
             </div>

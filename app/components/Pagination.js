@@ -1,17 +1,35 @@
 'use client'
 
-const Pagination = ({ users, currentPage, handlerPageSelect }) => {
+const Pagination = ({ users, currentPage, currentItemsPerPage, handlerPageSelect, handlerItemsPerPage }) => {
     return (
-        <>
-            <button onClick={() => handlerPageSelect(currentPage - 1)} className="text-blue-500 px-3 ">◀</button>
-            {
-                Array.from({ length: Math.ceil(users.length / 5) }, (_, i) => i + 1).map(page => (
-                    <button onClick={() => handlerPageSelect(page)}  key={page} className={`px-3 ${currentPage === page ? 'text-blue-500' : ''}`} 
-                    >{page}</button>
-                ))
-            }
-            <button onClick={() => handlerPageSelect(currentPage + 1)} className="text-blue-500 px-3">▶</button>
-        </>
+        <div>
+              <span className="text-sm font-light mr-1">Items per page: 
+                <select onChange={(e) => handlerItemsPerPage(e.target.value)} className="border border-gray-300 px-2 py-1 rounded ml-1 focus:outline-none">
+                    <option value={'5'}>5</option>
+                    <option value={'10'}>10</option>
+                    <option value={'25'}>25</option>
+                    <option value={'50'}>50</option>
+                </select>
+            </span>
+            <span className="ml-1">
+                {(currentPage * currentItemsPerPage) - currentItemsPerPage + 1}  {' - '} 
+                { currentPage * currentItemsPerPage > users.length ? users.length : currentPage * currentItemsPerPage } 
+                <span className="mx-1">of</span>{users.length}
+            </span>
+
+            <button title="Previous page" onClick={() => handlerPageSelect(currentPage - 1)} 
+                className={
+                    `${currentPage === 1 && 'opacity-50 cursor-not-allowed'}
+                    text-blue-600 px-3
+                    `
+                } >◀</button>
+           
+            <button title="Next page" onClick={() => handlerPageSelect(currentPage + 1)} 
+                className={
+                    `${currentPage === Math.ceil(users.length / currentItemsPerPage) && 'opacity-50 cursor-not-allowed'}
+                    text-blue-600 px-3`
+                }>▶</button>
+        </div>
     )
 }
 

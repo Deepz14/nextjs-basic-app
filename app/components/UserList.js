@@ -8,15 +8,21 @@ import { useState, useEffect } from "react";
 const UserList = ({ users }) => {
     const [totalresults, setTotalResults] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
 
     useEffect(() => {
         setTotalResults(users);
     }, [])
 
     const handlerPageSelect = (page) => {
-        if(page >= 1 && page <= Math.ceil(users.length / 5) && page !== currentPage) {
+        if(page >= 1 && page <= Math.ceil(users.length / itemsPerPage) && page !== currentPage) {
             setCurrentPage(page);
         }
+    }
+
+    const handlerItemsPerPage = (page) => {
+        setItemsPerPage(page);
+        setCurrentPage(1);
     }
 
     return  (
@@ -33,7 +39,7 @@ const UserList = ({ users }) => {
                     <tbody className="w-full">
                         {
                             totalresults?.length > 0 && (
-                                totalresults?.slice((currentPage * 5) - 5, currentPage * 5)?.map((user) => {
+                                totalresults?.slice((currentPage * itemsPerPage) - itemsPerPage, currentPage * itemsPerPage)?.map((user) => {
                                     return (
                                         <tr key={user.id}>
                                             <td className="flex items-center">
@@ -67,7 +73,8 @@ const UserList = ({ users }) => {
             {
                 users?.length > 0 && (
                     <div className="table-footer border border-gray-300 text-right text-sm py-2">
-                        <Pagination users={users} currentPage={currentPage}  handlerPageSelect={handlerPageSelect} />
+                        <Pagination users={users} currentPage={currentPage} currentItemsPerPage={itemsPerPage}
+                            handlerPageSelect={handlerPageSelect} handlerItemsPerPage={handlerItemsPerPage} />
                     </div>
                 )
             }
