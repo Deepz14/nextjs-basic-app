@@ -2,13 +2,15 @@ import FetchData from "./helpers/fetchData";
 import { Suspense } from "react";
 import UserList from "./components/UserList";
 
-const fetchUsers = async() => {
+const fetchUsers = async(page, perPage) => {
     const options = {
         method: 'GET',
-        headers: { 'X-GitHub-Api-Version': '2022-11-28'}
+        headers: { 'X-GitHub-Api-Version': '2022-11-28',
+        'Authorization': process.env.AUTH_TOKEN
+    }
     }
     const userURI = [];
-    const data = await FetchData('https://api.github.com/users', options);
+    const data = await FetchData(`https://api.github.com/users?since=${page}&per_page=${perPage}`, options);
 
     // Pushing the user url into userURI
     if(data?.length > 0) {
@@ -26,9 +28,14 @@ const fetchUsers = async() => {
 }
 
 
-export default async function Home() {
+export default async function Home({searchParams}) {
 
-   const Users = await fetchUsers();
+   const {since, per_page} = searchParams;
+   const currentPage = since == undefined ? 1 : parseInt(since);
+   const perPage = per_page == undefined ? 5 : parseInt(per_page);
+
+   const Users = await fetchUsers((currentPage * perPage) - perPage, perPage);
+
 
     return (
         <section className="my-3 mx-8 pb-5">
@@ -36,7 +43,7 @@ export default async function Home() {
                 <h3 className="font-bold text-lg">User List</h3>
             </div>
             <Suspense fallback={<div>loading......</div>}>
-                <UserList users={Users} />
+                <UserList users={Users} currentPage={currentPage} itemsPerPage={perPage} />
             </Suspense>
         </section>
   );

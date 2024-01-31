@@ -1,29 +1,9 @@
-'use client'
-
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "./Pagination";
-import { useState, useEffect } from "react";
 
-const UserList = ({ users }) => {
-    const [totalresults, setTotalResults] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
-
-    useEffect(() => {
-        setTotalResults(users);
-    }, [])
-
-    const handlerPageSelect = (page) => {
-        if(page >= 1 && page <= Math.ceil(users.length / itemsPerPage) && page !== currentPage) {
-            setCurrentPage(page);
-        }
-    }
-
-    const handlerItemsPerPage = (page) => {
-        setItemsPerPage(page);
-        setCurrentPage(1);
-    }
+const UserList = ({ users, currentPage, itemsPerPage }) => {
+    const totalresults = 100;
 
     return  (
         <>
@@ -38,8 +18,7 @@ const UserList = ({ users }) => {
                     </thead>
                     <tbody className="w-full">
                         {
-                            totalresults?.length > 0 && (
-                                totalresults?.slice((currentPage * itemsPerPage) - itemsPerPage, currentPage * itemsPerPage)?.map((user) => {
+                            users.length > 0 ? users?.map((user) => {
                                     return (
                                         <tr key={user.id}>
                                             <td className="flex items-center">
@@ -65,18 +44,18 @@ const UserList = ({ users }) => {
                                         </tr>
                                     )
                                 })
-                            )
+                            : <tr>
+                                <td colSpan="3" className="text-center">No records found 😐</td>
+                            </tr>
                         }   
                     </tbody>
                 </table>
             </div>
             {
-                users?.length > 0 && (
-                    <div className="table-footer border border-gray-300 text-right text-sm py-2">
-                        <Pagination users={users} currentPage={currentPage} currentItemsPerPage={itemsPerPage}
-                            handlerPageSelect={handlerPageSelect} handlerItemsPerPage={handlerItemsPerPage} />
-                    </div>
-                )
+                <div className="table-footer border border-gray-300 text-right text-sm py-2">
+                    <Pagination users={users} totalresults={totalresults}
+                        currentPage={currentPage} itemsPerPage={itemsPerPage} />
+                </div>
             }
     </>
     )
