@@ -5,7 +5,7 @@ import UserCardLinks from "./UserCardLinks";
 const UserDetailsCard = ({userInfo}) => {
     const {name, avatar_url, followers, following, location, email, blog, public_repos} = userInfo;
     return (
-        <div className="border border-gray-300 mt-8">
+        <div className="border border-gray-300 col-span-6">
             <div className="header-section border border-l-0 border-t-0 border-r-0 border-b-300 py-2 flex">
                 <Link href={'/'} className="rounded px-5 py-1 bg-gray-300 text-sm font-semibold mx-4 text-blue-600"> ◀ Back</Link>
             </div>

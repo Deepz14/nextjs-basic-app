@@ -10,8 +10,17 @@
 
 body{
   overflow-x: hidden;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+}
+
+nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffff;
+  z-index: 5;
 }
 
 .table-container{
@@ -98,4 +107,45 @@ tr:last-child td:last-child {
   100% {
     transform: rotate(360deg);
   }
+}
+
+body::-webkit-scrollbar{
+  width: 7px;
+  height: 5px;
+}
+
+body::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.26);
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar{
+  height: 7px;
+}
+
+.table-container::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.26);
+  border-radius: 10px;
+}
+
+.move-to-top{
+  position: fixed;
+  bottom: 54px;
+  right: 24px;
+  font-size: larger;
+}
+
+.search-container{
+  position: relative;
+}
+
+.search-suggestions-list{
+  position: absolute;
+  /* max-height: 0px; */
+  background-color: #FFFFFF;
+  color: #000;
+  width: 100%;
+  /* overflow-y: scroll; */
+  z-index: 100;
+  box-shadow: 0px 0px 1px 1px #efefef
 }
